@@ -198,6 +198,7 @@ class TrajectoryUtils():
             increment = difference / subtraj_len
             for i in range(1, len(subtraj) - 1):
 
+
                 subtraj_0 = subtraj[i - 1].point
                 subtraj_1 = subtraj[i].point
 
