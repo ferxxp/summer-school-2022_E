@@ -190,6 +190,12 @@ class TrajectoryUtils():
             wps_interp.append(subtraj[0])
 
             # interpolate headings
+            difference = subtraj[-1].heading - subtraj[0].heading
+            if difference > np.pi:
+                difference = - 2*np.pi + difference
+            if difference < -np.pi:
+                difference = +2*np.pi - difference
+            increment = difference / subtraj_len
             for i in range(1, len(subtraj) - 1):
 
                 subtraj_0 = subtraj[i - 1].point
@@ -199,7 +205,7 @@ class TrajectoryUtils():
                 # Tips:
                 #  - interpolate the heading linearly (create a function of distance between two points of the subpath)
                 #  - do not forget to wrap angle to <-pi, pi) (see/use wrapAngle() in utils.py)
-
+                heading = subtraj[0].heading + increment * i
                 # [STUDENTS TODO] Change variable 'hdg_interp', nothing else
                 hdg_interp = waypoints[0].heading
 
