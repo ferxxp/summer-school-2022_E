@@ -298,7 +298,6 @@ class RRT:
         #  - divide the given path by a certain ratio and use this method recursively
 
         if not self.validateLinePath(pt1, pt2, check_bounds=False):
-            
             # [STUDENTS TODO] Replace seg1 and seg2 variables effectively
             seg1 = path[:1]
             seg2 = path[1:]
