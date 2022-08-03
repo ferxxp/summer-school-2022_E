@@ -41,6 +41,7 @@ class TSPSolver3D():
 
             # setup KD tree for collision queries
             obstacles_array = np.array([[opt.x, opt.y, opt.z] for opt in problem.obstacle_points])
+
             path_planner['obstacles_kdtree'] = KDTree(obstacles_array)
 
             # setup environment bounds

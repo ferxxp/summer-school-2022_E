@@ -112,8 +112,17 @@ class MrimPlanner:
         ros_trajectory_2 = trajectoryToRosMsg(trajectories[1].getPoses(), self._global_frame)
 
         ## | ------------------ publish trajectories ------------------ |
+        #print("\n ***\n\n")
+        #print(ros_trajectory_1)
+        #print("\n ***\n\n")
         self.publisher_trajectory_1.publish(ros_trajectory_1)
         self.publisher_trajectory_2.publish(ros_trajectory_2)
+        print("\n")
+        print(len(trajectories[0].getPoses()))
+
+        print("\n_________________************************________________")
+
+
 
         plotter.show(legend=True)
 
@@ -220,7 +229,18 @@ class MrimPlanner:
                                                                            smooth_path=True, smoothing_la_dist=self._smoothing_distance,\
                                                                            smoothing_sampling_step=self._smoothing_sampling_step,\
                                                                            velocity_limits=constraints_velocity,
+
                                                                            acceleration_limits=constraints_acceleration)
+
+            print("\n")
+            print(len(trajectory.waypoints))
+
+            print("\n_________________************************________________")
+
+            print("\n")
+            for pose in trajectory.waypoints:
+                print(str(pose.heading))
+            print("\n____________________________________________")
 
             if trajectory is None:
                 rospy.logerr('Unable to sample trajectory through waypoints. Read the log output to find out why.')

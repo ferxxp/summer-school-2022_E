@@ -1,5 +1,5 @@
 problem:
-  name: "single_tower.problem" # [single_tower.problem, four_towers_small.problem, four_towers_large.problem]
+  name: "four_towers_large.problem" # [single_tower.problem, four_towers_small.problem, four_towers_large.problem]
   plot: False
 
 # Parameters for Traveling Salesman Problem
@@ -9,7 +9,7 @@ tsp:
 
 # Parameters for path planning
 path_planner:
-  timeout: 10.0              # (s) timeout for single start-to-goal planning
+  timeout: 100.0              # (s) timeout for single start-to-goal planning
   method: 'astar'              # [STUDENTS TODO: implement better method than the default] Method for generating start-to-goal paths: [euclidean, astar, rrt (default), rrtstar]
   straighten_paths: true    # [STUDENTS TODO: implement better method than the default] Path straightening flag (default: false)
 
@@ -30,19 +30,19 @@ path_planner:
 # Parameters for path smoothing
 path_smoothing:
   sampling_step: 0.1  # (m)
-  lookahead_dist: 0.3 # (m)
+  lookahead_dist: 0.5 # (m)
 
 # Parameters for sampling the UAVs' trajectories
 trajectory_sampling:
-  with_stops: false # [STUDENTS TODO: implement better method than the default] If true, UAVs will stop at each waypoint (default: true)
+  with_stops: true # [STUDENTS TODO: implement better method than the default] If true, UAVs will stop at each waypoint (default: true)
 
 # Parameters for UAV-to-UAV collision avoidance
 collision_avoidance:
-  method: 'none' # [STUDENTS TODO: implement better method than the default] [none (default), delay_2nd_till_1st_UAV_finishes, delay_till_no_collisions_occur]
+  method: 'delay_till_no_collisions_occur' # [STUDENTS TODO: implement better method than the default] [none (default), delay_2nd_till_1st_UAV_finishes, delay_till_no_collisions_occur]
 
 # Simulation-specific parameters
 simulation:
-  flight_always_allowed: true # If true, the simulation of flight will start even if the trajectory will not conform all constraints
+  flight_always_allowed: false # If true, the simulation of flight will start even if the trajectory will not conform all constraints
 
 # Visualization parameters
 visualization:

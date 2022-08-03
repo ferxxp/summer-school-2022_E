@@ -147,7 +147,9 @@ class AStar():
 
         # keep heading of first point
         path_m[0] = (path_m[0][0], path_m[0][1], path_m[0][2], m_start[3]) 
-
+        #print("\n")
+        #print(path_m)
+        #print("\n")
         return path_m, distance
 
     def searchPath(self, start, goal):

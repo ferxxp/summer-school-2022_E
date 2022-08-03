@@ -447,6 +447,9 @@ class TrajectoryUtils():
             if not waypoints:
                 return None
 
+            #print("\n")
+            #print(trajectory.waypoints)
+            #print("\n____________________________________________")
             # Interpolate heading between waypoints
             traj_hdg_interp = self.interpolateHeading(waypoints)
             # Parametrize trajectory
@@ -462,7 +465,13 @@ class TrajectoryUtils():
             print(samples)
             # Convert to Trajectory class
             poses      = [Pose(q[0], q[1], q[2], q[3]) for q in samples]
+            #print("\n")
+            #for pose in trajectory.waypoints:
+            #    print(str(pose.heading))
+            #print("\n____________________________________________")
+
             trajectory = self.posesToTrajectory(poses)
+
 
         return trajectory
     # #}
@@ -613,7 +622,7 @@ class TrajectoryUtils():
         ## |  [COLLISION AVOIDANCE METHOD #2]: Delay UAV with shorter trajectory at start until there is no collision occurring  |
         elif method == 'delay_till_no_collisions_occur':
 
-            raise NotImplementedError('[STUDENTS TODO] Collision prevention method \'delay_till_no_collisions_occur\' not finished. You have to finish it on your own.')
+            #raise NotImplementedError('[STUDENTS TODO] Collision prevention method \'delay_till_no_collisions_occur\' not finished. You have to finish it on your own.')
             # Tips:
             #  - you might select which trajectory it is better to delay
             #  - the smallest delay step is the sampling step stored in variable 'self.dT'
@@ -624,8 +633,9 @@ class TrajectoryUtils():
 
             # Decide which UAV should be delayed
             # [STUDENTS TODO] CHANGE BELOW
-            delay_robot_idx, nondelay_robot_idx = 0, 1
-
+            print("#########")
+            print(int(traj_times[0]<traj_times[1]) , int(traj_times[1]<traj_times[0]))
+            delay_robot_idx, nondelay_robot_idx = int(traj_times[0]<traj_times[1]) , int(traj_times[1]<traj_times[0])
             # TIP: use function `self.trajectoriesCollide()` to check if two trajectories are in collision
             collision_flag, collision_idx = \
                 self.trajectoriesCollide(trajectories[delay_robot_idx], trajectories[nondelay_robot_idx], safety_distance)
@@ -639,8 +649,8 @@ class TrajectoryUtils():
                     delay_t += delay_step
                     # TIP: use function `trajectory.delayStart(X)` to delay a UAV at the start location by X seconds
                     trajectories[delay_robot_idx].delayStart(delay_step)
-                else:
-                    collision_flag = False
+                collision_flag, collision_idx = \
+                        self.trajectoriesCollide(trajectories[delay_robot_idx], trajectories[nondelay_robot_idx],safety_distance)
 
         # # #}
 
