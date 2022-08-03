@@ -451,14 +451,14 @@ class TrajectoryUtils():
             traj_hdg_interp = self.interpolateHeading(waypoints)
             # Parametrize trajectory
             toppra_trajectory = self.getParametrizedTrajectory(traj_hdg_interp, velocity_limits, acceleration_limits)
-
             sampling_step = trajectory.dT
-
             # STUDENTS TODO: Sample the path parametrization 'toppra_trajectory' (instance of TOPPRA library).
             # Tips:
             #  - check documentation for TOPPRA (look for eval() function): https://hungpham2511.github.io/toppra/index.html
             #  - use 'toppra_trajectory' and the predefined sampling step 'sampling_step'
-            samples = toppra_trajectory.waypoints # [STUDENTS TODO] Fill this variable with trajectory samples
+            time_stamps = np.arange(0,toppra_trajectory.duration,sampling_step)
+            samples = toppra_trajectory.eval(time_stamps)
+
             print(samples)
             # Convert to Trajectory class
             poses      = [Pose(q[0], q[1], q[2], q[3]) for q in samples]
@@ -911,9 +911,6 @@ class TrajectoryUtils():
         print('[PARAMETRIZING TRAJECTORY]')
         unwrapped_heading_path = self.unwrapHeadingInPath(waypoints)
         trajectory             = self.computeTimeParametrization(unwrapped_heading_path, v_lims, a_lims)
-        print("trajectory")
-        print(trajectory)
-        print("A")
         return trajectory
     # #} end of
 
