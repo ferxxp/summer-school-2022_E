@@ -190,12 +190,12 @@ class TrajectoryUtils():
             wps_interp.append(subtraj[0])
 
             # interpolate headings
-            difference = subtraj[-1].heading - subtraj[0].heading
+            difference = g_to.heading - g_from.heading
             if difference > np.pi:
                 difference = - 2*np.pi + difference
             if difference < -np.pi:
-                difference = +2*np.pi - difference
-            increment = difference / subtraj_len
+                difference = + 2*np.pi - difference
+            increment = difference / (subtraj_len-1)
             for i in range(1, len(subtraj) - 1):
 
 
@@ -209,17 +209,15 @@ class TrajectoryUtils():
                 #  - do not forget to wrap angle to <-pi, pi) (see/use wrapAngle() in utils.py)
                 heading = subtraj[0].heading + increment * i
                 # [STUDENTS TODO] Change variable 'hdg_interp', nothing else
-                hdg_interp = waypoints[0].heading
+                hdg_interp = heading
 
                 # replace heading
-                hdg_from   = hdg_interp
                 wp         = subtraj[i]
                 wp.heading = hdg_interp
                 wps_interp.append(wp)
 
         # include the very last node
         wps_interp.append(waypoints[-1])
-
         return wps_interp
 
     # # #}
@@ -457,13 +455,11 @@ class TrajectoryUtils():
             sampling_step = trajectory.dT
 
             # STUDENTS TODO: Sample the path parametrization 'toppra_trajectory' (instance of TOPPRA library).
-            raise NotImplementedError('[STUDENTS TODO] Trajectory sampling not finished. You have to implement it on your own.')
             # Tips:
             #  - check documentation for TOPPRA (look for eval() function): https://hungpham2511.github.io/toppra/index.html
             #  - use 'toppra_trajectory' and the predefined sampling step 'sampling_step'
-
-            samples = [] # [STUDENTS TODO] Fill this variable with trajectory samples
-
+            samples = toppra_trajectory.waypoints # [STUDENTS TODO] Fill this variable with trajectory samples
+            print(samples)
             # Convert to Trajectory class
             poses      = [Pose(q[0], q[1], q[2], q[3]) for q in samples]
             trajectory = self.posesToTrajectory(poses)
@@ -576,6 +572,7 @@ class TrajectoryUtils():
         pc_acc     = constraint.JointAccelerationConstraint(a_lims)
         instance   = algo.TOPPRA([pc_vel, pc_acc], path, parametrizer="ParametrizeConstAccel")
         trajectory = instance.compute_trajectory()
+
 
         return trajectory
     # #} end of computeTimeParametrization()
@@ -914,7 +911,9 @@ class TrajectoryUtils():
         print('[PARAMETRIZING TRAJECTORY]')
         unwrapped_heading_path = self.unwrapHeadingInPath(waypoints)
         trajectory             = self.computeTimeParametrization(unwrapped_heading_path, v_lims, a_lims)
-
+        print("trajectory")
+        print(trajectory)
+        print("A")
         return trajectory
     # #} end of
 
