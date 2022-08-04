@@ -195,7 +195,7 @@ class TrajectoryUtils():
                 difference = - 2*np.pi + difference
             if difference < -np.pi:
                 difference = + 2*np.pi - difference
-            increment = difference / (subtraj_len-1)
+            increment = difference / (len(subtraj)-1)
             for i in range(1, len(subtraj) - 1):
 
 
@@ -401,6 +401,7 @@ class TrajectoryUtils():
         '''
         Samples trajectory such that it respects dynamic constraints
 
+
         Parameters:
             trajectory (Trajectory): the trajectory which waypoints should be sampled
             with_stops (bool): zero velocity will is required in every waypoint
@@ -462,7 +463,6 @@ class TrajectoryUtils():
             time_stamps = np.arange(0,toppra_trajectory.duration,sampling_step)
             samples = toppra_trajectory.eval(time_stamps)
 
-            print(samples)
             # Convert to Trajectory class
             poses      = [Pose(q[0], q[1], q[2], q[3]) for q in samples]
             #print("\n")
