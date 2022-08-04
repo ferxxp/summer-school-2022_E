@@ -223,7 +223,7 @@ class TSPSolver3D():
 
     def compute_tsp_sequence(self):
         '''
-        Compute the shortest sequence based on the distance matrix (self.distances) using LKH
+        Compute the shortest sequence based on the distance matrix (self.distances) using LKHLKH
 
         Returns:
             sequence (list): sequence of viewpoints ordered optimally w.r.t the distance matrix
